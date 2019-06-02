@@ -125,19 +125,19 @@ func getProgramInfo(ctx context.Context, targetTime time.Time, stationID string)
 			"Failed to get the program: %s", err)
 	}
 	startStr := targetTime.Format(datetimeLayout)
-	intStart, err := strconv.Atoi(startStr)
+	intStart, err := strconv.ParseInt(startStr, 10, 64)
 	if err != nil {
 		log.Println("cannot convert targetTime", targetTime)
 	}
 	for _, prog := range pg[0].Progs.Progs {
-		intFrom, err := strconv.Atoi(prog.Ft)
+		intFrom, err := strconv.ParseInt(prog.Ft, 10, 64)
 		if err != nil {
-			log.Println("cannot convert from", prog.Ft)
+			log.Println("cannot convert from", prog.Ft, err)
 
 		}
-		intTo, err := strconv.Atoi(prog.To)
+		intTo, err := strconv.ParseInt(prog.To, 10, 64)
 		if err != nil {
-			log.Println("cannot convert from", prog.To)
+			log.Println("cannot convert to", prog.To, err)
 		}
 		if intStart >= intFrom && intStart < intTo {
 			return &prog, pg[0].Name

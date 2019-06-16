@@ -42,11 +42,9 @@ func Run(filename string) {
 	log.Println("filename:", filename)
 	if !exists(filename) {
 		log.Fatal("file doesn't exist")
-		os.Exit(1)
 	}
 	if !isAudioFile(filename) {
 		log.Fatal("invalid file format")
-		os.Exit(1)
 	}
 
 	ctx, ctxCancel := context.WithCancel(context.Background())
@@ -89,16 +87,14 @@ func parse(filename string) (recordedAt time.Time, station string) {
 	elements := strings.Split(fileNameWithoutExt, "-")
 	if len(elements) != 2 {
 		log.Fatal("invalid filename format:", fileNameWithoutExt)
-		os.Exit(1)
 	}
 	start := elements[0]
 	station = elements[1]
 	var err error
 	recordedAt, err = time.ParseInLocation(datetimeLayout, start, location)
 	if err != nil {
-		fmt.Println(
+		log.Fatalf(
 			"Invalid start time format '%s': %s", start, err)
-		os.Exit(1)
 	}
 	return recordedAt, station
 }
@@ -123,16 +119,14 @@ func getProgramInfo(ctx context.Context, targetTime time.Time, stationID string)
 
 	client, err := getClient(ctx, currentAreaID)
 	if err != nil {
-		fmt.Printf(
+		log.Fatalf(
 			"Failed to construct a radiko Client: %s", err)
-		os.Exit(1)
 	}
 
 	_, err = client.AuthorizeToken(ctx)
 	if err != nil {
-		fmt.Printf(
+		log.Fatalf(
 			"Failed to get auth_token: %s", err)
-		os.Exit(1)
 	}
 	pg, err := client.GetWeeklyPrograms(ctx, stationID)
 	if err != nil {

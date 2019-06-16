@@ -8,8 +8,10 @@ import (
 
 type Tag struct {
 	Title   string
+	Title2  string
 	Artist  string
 	PubDate time.Time
+	Comment string
 }
 
 func CreateTagFromPg(pg *radiko.Prog, station string) Tag {
@@ -18,18 +20,19 @@ func CreateTagFromPg(pg *radiko.Prog, station string) Tag {
 		log.Println("cannot parse date", pg.Ft)
 		start = time.Unix(0, 0)
 	}
-	return Tag{pg.Title, station, start}
+	return Tag{pg.Title, "", station, start, pg.Info}
 }
 
 func (t Tag) toFfMpegOption() []string {
 	metadata := []string{
-		"-metadata", "title=" + t.Title + " " + t.PubDate.Format("2006年01月02日"),
+		"-metadata", "title=" + t.Title + " " + t.PubDate.Format("2006年01月02日") + t.Title2,
 		"-metadata", "genre=Radio",
 		"-metadata", "artist=" + t.Artist,
+		"-metadata", "comment=" + t.Comment,
 	}
 	return metadata
 }
 
 func (t Tag) toFileName() string {
-	return t.Title + " " + t.PubDate.Format("2006年01月02日")
+	return t.Title + " " + t.PubDate.Format("2006年01月02日") + t.Title2
 }

@@ -24,6 +24,8 @@ github.com/hashicorp/golang-lru v0.5.1/go.mod h1:/m3WP610KZHVQ1SGc6re/UDhFvYD7pJ
 github.com/jstemmer/go-junit-report v0.0.0-20190106144839-af01ea7f8024/go.mod h1:6v2b51hI/fHJwM22ozAgKL4VKDeJcHhJFhtBdhmNjmU=
 github.com/kangaechu/after6calendar v0.0.0-20190616084730-2f460675f1aa h1:3F9ZDKLmXXKEx8DcoFsF2VrX23BENFVrQyJkPwezjKk=
 github.com/kangaechu/after6calendar v0.0.0-20190616084730-2f460675f1aa/go.mod h1:FS0qHKgZZFiWpmV9Zc9zQOLKdkGBeommJ03idYE8Oe8=
+github.com/kangaechu/after6calendar v0.0.0-20190616084730-bd149514339ef h1:Nv/eEk3JMyTI/F5HJRd8CX8RC8mih/RYawbz4sgAwF4=
+github.com/kangaechu/after6calendar v0.0.0-20190616084730-bd149514339ef/go.mod h1:FS0qHKgZZFiWpmV9Zc9zQOLKdkGBeommJ03idYE8Oe8=
 github.com/yyoshiki41/go-radiko v0.6.0 h1:7CXK15v4EHfxw950l0jf9WcoRXqivc7u+K2kP5IR0qE=
 github.com/yyoshiki41/go-radiko v0.6.0/go.mod h1:ci7oAybvu56U4p+mLqNPbS4/aoYMUbevs6iZZbKSua8=
 go.opencensus.io v0.21.0 h1:mU6zScU4U1YAFPHEHYk+3JC4SY7JxgkqS10ZOSyksNg=

@@ -24,3 +24,5 @@
 
 /radiorenamer
 /output/
+*.json
+go_build_*

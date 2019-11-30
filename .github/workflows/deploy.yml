@@ -119,6 +119,12 @@ jobs:
     - name: Check out code into the Go module directory
       uses: actions/checkout@v1
 
+    # get tag version
+    # https://github.community/t5/GitHub-Actions/How-to-get-just-the-tag-name/m-p/32167#M1027
+    - name: Get the version
+      id: get_version
+      run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
     - name: Get dependencies
       run: go get -v -t -d ./...
 
@@ -150,6 +156,6 @@ jobs:
       with:
         upload_url: ${{ steps.get_url.outputs.upload_url }}
         asset_path: release.zip
-        # ${GITHUB_REF##*/} はGitのタグ名（バージョン）
-        asset_name: ${{ github.event.repository.name }}_${GITHUB_REF##*/}_${{ matrix.os }}.zip
+        # ${{ steps.get_version.outputs.VERSION }} represents tag version
+        asset_name: ${{ github.event.repository.name }}_${{ steps.get_version.outputs.VERSION }}_${{ matrix.os }}.zip
         asset_content_type: application/zip

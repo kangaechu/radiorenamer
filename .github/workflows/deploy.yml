@@ -135,7 +135,7 @@ jobs:
         goarm: ${{ matrix.arm }}
       run: |
         mkdir dist
-        GOOS=$goos GOARCH=$goarch GOARM=$goarm go build -v -o dist/${{ github.event.repository.name }} ./cmd/${{ github.event.repository.name }}
+        GOOS=$goos GOARCH=$goarch GOARM=$goarm go build -v -ldflags="-s -w -extldflags \"-static\"" -o dist/${{ github.event.repository.name }} ./cmd/${{ github.event.repository.name }}
         zip -j -r release dist
 
     - name: Download artifact to get url to upload to release

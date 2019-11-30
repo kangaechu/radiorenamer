@@ -150,5 +150,6 @@ jobs:
       with:
         upload_url: ${{ steps.get_url.outputs.upload_url }}
         asset_path: release.zip
-        asset_name: release-${{ matrix.os }}.zip
+        # ${GITHUB_REF##*/} はGitのタグ名（バージョン）
+        asset_name: ${{ github.event.repository.name }}_${GITHUB_REF##*/}_${{ matrix.os }}.zip
         asset_content_type: application/zip

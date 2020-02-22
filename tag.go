@@ -3,6 +3,7 @@ package radiorenamer
 import (
 	"github.com/yyoshiki41/go-radiko"
 	"log"
+	"strings"
 	"time"
 )
 
@@ -25,7 +26,7 @@ func CreateTagFromPg(pg *radiko.Prog, station string) Tag {
 
 func (t Tag) toFfMpegOption() []string {
 	metadata := []string{
-		"-metadata", "title=" + t.Title + " " + t.PubDate.Format("2006年01月02日") + " " + t.Title2,
+		"-metadata", "title=" + strings.TrimSpace(t.Title+" "+t.PubDate.Format("2006年01月02日")+" "+t.Title2),
 		"-metadata", "genre=Radio",
 		"-metadata", "artist=" + t.Artist,
 		"-metadata", "comment=" + t.Comment,
@@ -34,5 +35,5 @@ func (t Tag) toFfMpegOption() []string {
 }
 
 func (t Tag) toFileName() string {
-	return t.Title + " " + t.PubDate.Format("2006年01月02日") + " " + t.Title2
+	return strings.TrimSpace(t.Title + " " + t.PubDate.Format("2006年01月02日") + " " + t.Title2)
 }

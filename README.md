@@ -2,7 +2,7 @@
 
 ## Overview
 
-radigoで取得した `<station>-<yyyymmddhhmmss>.aac` から
+radigoで取得した ファイル名 `<yyyymmddhhmmss>-<station>.aac`、または`<yyyymmddhhmmss>-<station>-<areaid>.aac`から
 
 - radikoから番組情報取得
 - ファイル名をリネーム
@@ -14,7 +14,9 @@ radigoで取得した `<station>-<yyyymmddhhmmss>.aac` から
 ## Usage
 
 ```
-radiorenamer <station>-<yyyymmddhhmmss>.aac
+$ radiorenamer <yyyymmddhhmmss>-<station>.aac
+or 
+$ radiorenamer <yyyymmddhhmmss>-<station>-<areaid>.aac
 ```
 
 ## License

@@ -50,12 +50,12 @@ func Run(filename string) {
 	ctx, ctxCancel := context.WithCancel(context.Background())
 	defer ctxCancel()
 
-	recordedAt, station := parse(filename)
+	recordedAt, station, area := parse(filename)
 	centeredTime := getCenteredTime(ctx, filename, recordedAt)
 	log.Println("time", recordedAt)
 	log.Println("time", centeredTime)
 	// Radikoから番組情報を取得
-	pg, station := getProgramInfo(ctx, centeredTime, station)
+	pg, station := getProgramInfo(ctx, centeredTime, station, area)
 	tag := CreateTagFromPg(pg, station)
 
 	if strings.HasPrefix(tag.Title, "アフター６ジャンクション") {
@@ -82,13 +82,21 @@ func Run(filename string) {
 // parse parses yyyymmddhhmmss-<STATIONname>.m4a and returns following parameters.
 // 	recordedAt: recorded time
 //	station: recorded station
-func parse(filename string) (recordedAt time.Time, station string) {
+func parse(filename string) (recordedAt time.Time, station string, area string) {
 	fileNameWithoutExt := getFileNameWithoutExt(filename)
 	elements := strings.Split(fileNameWithoutExt, "-")
-	if len(elements) != 2 {
+	var start string
+	if len(elements) == 2 {
+		start = elements[0]
+		station = elements[1]
+		area = ""
+	} else if len(elements) == 3 {
+		start = elements[0]
+		station = elements[1]
+		area = elements[2]
+	} else {
 		log.Fatal("invalid filename format:", fileNameWithoutExt)
 	}
-	start := elements[0]
 	station = elements[1]
 	var err error
 	recordedAt, err = time.ParseInLocation(datetimeLayout, start, location)
@@ -96,7 +104,7 @@ func parse(filename string) (recordedAt time.Time, station string) {
 		log.Fatalf(
 			"Invalid start time format '%s': %s", start, err)
 	}
-	return recordedAt, station
+	return recordedAt, station, area
 }
 
 func getCenteredTime(ctx context.Context, filename string, startTime time.Time) (centeredTime time.Time) {
@@ -113,11 +121,17 @@ func getFileNameWithoutExt(path string) string {
 }
 
 // getProgramInfo fetches radiko program information from radiko.jp
-func getProgramInfo(ctx context.Context, targetTime time.Time, stationID string) (*radiko.Prog, string) {
+func getProgramInfo(ctx context.Context, targetTime time.Time, stationID string, area string) (*radiko.Prog, string) {
 	ctx, ctxCancel := context.WithCancel(context.Background())
 	defer ctxCancel()
 
-	client, err := getClient(ctx, currentAreaID)
+	var recordedAreaId string
+	if area == currentAreaID {
+		recordedAreaId = currentAreaID
+	} else {
+		recordedAreaId = area
+	}
+	client, err := getClient(ctx, recordedAreaId)
 	if err != nil {
 		log.Fatalf(
 			"Failed to construct a radiko Client: %s", err)

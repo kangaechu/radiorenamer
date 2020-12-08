@@ -71,6 +71,14 @@ func Run(filename string) {
 		tag.Comment = *after6calendar.GetProgramSummary(recordedAt)
 	}
 
+	if strings.HasPrefix(tag.Title, "ミッドナイト・ダイバーシティー") {
+		switch {
+		case recordedAt.Hour() == 0:
+			tag.Title = tag.Title + " 0時台"
+		case recordedAt.Hour() == 1:
+			tag.Title = tag.Title + " 1時台"
+		}
+	}
 	metadata := tag.toFfMpegOption()
 	output := filepath.Join(filepath.Dir(filename), tag.toFileName()+".m4a")
 	err := PutM4aTag(ctx, filename, output, metadata)

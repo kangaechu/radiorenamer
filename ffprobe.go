@@ -3,7 +3,6 @@ package radiorenamer
 import (
 	"context"
 	"io"
-	"log"
 	"os/exec"
 	"strconv"
 	"strings"
@@ -61,14 +60,14 @@ func (f *ffprobe) stderrPipe() (io.ReadCloser, error) {
 func Duration(ctx context.Context, input string) (float32, error) {
 	f, err := newFfprobe(ctx)
 	if err != nil {
-		return 0, err
+		return -1, err
 	}
 	f.setInput(input)
 	f.setArgs("-hide_banner", "-show_entries", "format=duration")
 	// run ffprobe
 	output, err := f.run()
 	if err != nil {
-		log.Fatal("failed to get duration.")
+		return -1, err
 	}
 
 	// parse output
@@ -79,7 +78,7 @@ func Duration(ctx context.Context, input string) (float32, error) {
 	var duration float64
 	duration, err = strconv.ParseFloat(dur[1], 64)
 	if err != nil {
-		log.Fatal("failed to parse duration.")
+		return -1, err
 	}
 
 	return float32(duration), nil

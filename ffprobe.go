@@ -4,7 +4,6 @@ import (
 	"context"
 	"io"
 	"log"
-	"os"
 	"os/exec"
 	"strconv"
 	"strings"
@@ -69,8 +68,7 @@ func Duration(ctx context.Context, input string) (float32, error) {
 	// run ffprobe
 	output, err := f.run()
 	if err != nil {
-		log.Fatal("failded to get duration.")
-		os.Exit(1)
+		log.Fatal("failed to get duration.")
 	}
 
 	// parse output
@@ -80,6 +78,10 @@ func Duration(ctx context.Context, input string) (float32, error) {
 	dur := strings.Split(record[1], "=")
 	var duration float64
 	duration, err = strconv.ParseFloat(dur[1], 64)
+	if err != nil {
+		log.Fatal("failed to parse duration.")
+	}
+
 	return float32(duration), nil
 
 }

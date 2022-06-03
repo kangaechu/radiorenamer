@@ -56,25 +56,7 @@ func (f *ffmpeg) stderrPipe() (io.ReadCloser, error) {
 	return f.StderrPipe()
 }
 
-// ConvertM4AtoMP3 converts an m4a file to a mp3 file.
-func ConvertM4AtoMP3(ctx context.Context, input, output string) error {
-	f, err := newFfmpeg(ctx)
-	if err != nil {
-		return err
-	}
-
-	f.setInput(input)
-	f.setArgs(
-		"-c:a", "libmp3lame",
-		"-ac", "2",
-		"-q:a", "2",
-		"-y", // overwrite the output file without asking
-	)
-	// TODO: Collect log
-	return f.run(output)
-}
-
-// ConcatM4AFiles concatenate files of the same type.
+// PutM4aTag concatenate files of the same type.
 func PutM4aTag(ctx context.Context, input, output string, metadata []string) error {
 	f, err := newFfmpeg(ctx)
 	if err != nil {

@@ -26,3 +26,4 @@
 /output/
 *.json
 go_build_*
+*.aac

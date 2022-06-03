@@ -102,6 +102,10 @@ func parse(filename string) (recordedAt time.Time, station string, area string) 
 		start = elements[0]
 		station = elements[1]
 		area = elements[2]
+	} else if len(elements) >= 4 {
+		start = elements[0]
+		station = strings.Join(elements[1:len(elements)-2], "-")
+		area = elements[len(elements)-1]
 	} else {
 		log.Fatal("invalid filename format:", fileNameWithoutExt)
 	}

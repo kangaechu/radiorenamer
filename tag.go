@@ -1,10 +1,11 @@
 package radiorenamer
 
 import (
-	"github.com/yyoshiki41/go-radiko"
 	"log"
 	"strings"
 	"time"
+
+	"github.com/yyoshiki41/go-radiko"
 )
 
 type Tag struct {

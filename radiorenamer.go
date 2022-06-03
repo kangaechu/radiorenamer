@@ -3,13 +3,14 @@ package radiorenamer
 import (
 	"context"
 	"fmt"
-	"github.com/yyoshiki41/go-radiko"
 	"log"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/yyoshiki41/go-radiko"
 
 	"github.com/kangaechu/after6calendar"
 )

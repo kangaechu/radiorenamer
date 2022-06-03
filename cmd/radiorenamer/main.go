@@ -3,8 +3,9 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/kangaechu/radiorenamer"
 	"os"
+
+	"github.com/kangaechu/radiorenamer"
 )
 
 var version string

@@ -3,13 +3,14 @@ package radiorenamer
 import (
 	"context"
 	"fmt"
-	"github.com/yyoshiki41/go-radiko"
 	"log"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/yyoshiki41/go-radiko"
 
 	"github.com/kangaechu/after6calendar"
 )
@@ -137,13 +138,13 @@ func getProgramInfo(ctx context.Context, targetTime time.Time, stationID string,
 	ctx, ctxCancel := context.WithCancel(context.Background())
 	defer ctxCancel()
 
-	var recordedAreaId string
+	var recordedAreaID string
 	if area == currentAreaID {
-		recordedAreaId = currentAreaID
+		recordedAreaID = currentAreaID
 	} else {
-		recordedAreaId = area
+		recordedAreaID = area
 	}
-	client, err := getClient(ctx, recordedAreaId)
+	client, err := getClient(ctx, recordedAreaID)
 	if err != nil {
 		log.Fatalf(
 			"Failed to construct a radiko Client: %s", err)

@@ -89,7 +89,8 @@ func Run(filename string) {
 }
 
 // parse parses yyyymmddhhmmss-<STATIONname>.m4a and returns following parameters.
-// 	recordedAt: recorded time
+//
+//	recordedAt: recorded time
 //	station: recorded station
 func parse(filename string) (recordedAt time.Time, station string, area string) {
 	fileNameWithoutExt := getFileNameWithoutExt(filename)

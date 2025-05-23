@@ -1,6 +1,6 @@
 module github.com/kangaechu/radiorenamer
 
-go 1.23.3
+go 1.24.3
 
 require (
 	github.com/kangaechu/after6calendar v1.0.2

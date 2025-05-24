@@ -11,8 +11,6 @@ import (
 	"time"
 
 	"github.com/yyoshiki41/go-radiko"
-
-	"github.com/kangaechu/after6calendar"
 )
 
 var (
@@ -59,27 +57,6 @@ func Run(filename string) {
 	pg, station := getProgramInfo(ctx, centeredTime, station, area)
 	tag := CreateTagFromPg(pg, station)
 
-	if strings.HasPrefix(tag.Title, "アフター６ジャンクション") {
-		switch {
-		case strings.Contains(tag.Title, "(1)"):
-			tag.Title2 = "18時台"
-		case strings.Contains(tag.Title, "(2)"):
-			tag.Title2 = "19時台"
-		case strings.Contains(tag.Title, "(3)"):
-			tag.Title2 = "20時台"
-		}
-		tag.Title = "After6 Junction"
-		tag.Comment = *after6calendar.GetProgramSummary(recordedAt)
-	}
-
-	if strings.HasPrefix(tag.Title, "ミッドナイト・ダイバーシティー") {
-		switch {
-		case recordedAt.Hour() == 0:
-			tag.Title = tag.Title + " 0時台"
-		case recordedAt.Hour() == 1:
-			tag.Title = tag.Title + " 1時台"
-		}
-	}
 	metadata := tag.toFfMpegOption()
 	output := filepath.Join(filepath.Dir(filename), tag.toFileName()+".m4a")
 	err := PutM4aTag(ctx, filename, output, metadata)
